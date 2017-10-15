@@ -6,12 +6,11 @@ import argparse
 def extract_list_of_files(directory, list_of_file=[]):
     for dir_entry in os.scandir(directory):
         if dir_entry.is_dir():
-            extract_list_of_files(dir_entry, list_of_file)
+            extract_list_of_files(dir_entry.path, list_of_file)
         else:
             list_of_file.append({'name': dir_entry.name,
                                 'size': getsize(dir_entry.path),
                                  'path': dir_entry.path})
-    os.scandir(directory).close()
     return list_of_file
 
 

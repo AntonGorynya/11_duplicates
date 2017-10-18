@@ -3,7 +3,9 @@ from os.path import join, getsize
 import argparse
 
 
-def extract_list_of_files(directory, list_of_file=[]):
+def extract_list_of_files(directory, list_of_file=None):
+    if list_of_file is None:
+        list_of_file = []
     for dir_entry in os.scandir(directory):
         if dir_entry.is_dir():
             extract_list_of_files(dir_entry, list_of_file)

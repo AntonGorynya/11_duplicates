@@ -36,9 +36,8 @@ def remove_duplicates(directory):
             dict_same_files[file['name']] += list_same_file
             dict_same_files[file['name']] = \
                 list(set(dict_same_files[file['name']]))
-    for dict_key, dict_vaue in dict_same_files.items():
-        if dict_vaue != []:
-            removeble_files.update({dict_key: dict_vaue})
+            removeble_files.update(
+                {file['name']: dict_same_files[file['name']]})
     return removeble_files
 
 
@@ -49,7 +48,6 @@ def create_parser():
 
 if __name__ == '__main__':
     parser = create_parser()
-    namespace = parser.parse_args()
-    for file_name, file_paths \
-            in remove_duplicates(namespace.directory).items():
+    args = parser.parse_args()
+    for file_name, file_paths in remove_duplicates(args.directory).items():
         print("find duplicated of {}:".format(file_name), *file_paths)

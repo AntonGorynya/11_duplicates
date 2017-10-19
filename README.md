@@ -11,10 +11,9 @@ Example of script launch on Linux, Python 3.5:
 ```#!bash
 
 duplicates.py ./
-find duplicated file: ./1\2\4.txt
-find duplicated file: ./1\2\3.txt
-find duplicated file: ./1\2\3\3.txt
-find duplicated file: ./1\2\3\4.txt
+find duplicated of 2.txt: ./1\2\2.txt ./1\2.txt
+find duplicated of 3.txt: ./1\2\3\3.txt ./1\2\3.txt ./1\3.txt
+find duplicated of 4.txt: ./1\2\3\4.txt ./1\2\4.txt ./1\4.txt
 
 ```
 

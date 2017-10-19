@@ -18,19 +18,28 @@ def extract_list_of_files(directory, list_of_file=None):
 
 
 def remove_duplicates(directory):
-    removeble_files = []
     list_of_file = extract_list_of_files(directory)
+    dict_same_files = {file['name']: [] for file in list_of_file}
+    removeble_files = {}
     for position, file in enumerate(list_of_file):
         file_name = file['name']
         size = file['size']
+        list_same_file = []
         for position2, file2 in enumerate(list_of_file):
             file_name2 = file2['name']
             size2 = file2['size']
             if (file_name == file_name2) and (size == size2) \
                     and (position2 > position):
-                removeble_files.append(file2['path'])
-                removeble_files.append(file['path'])
-    return set(removeble_files)
+                list_same_file.append(file['path'])
+                list_same_file.append(file2['path'])
+        if list_same_file != []:
+            dict_same_files[file['name']] += list_same_file
+            dict_same_files[file['name']] = \
+                list(set(dict_same_files[file['name']]))
+    for dict_key, dict_vaue in dict_same_files.items():
+        if dict_vaue != []:
+            removeble_files.update({dict_key: dict_vaue})
+    return removeble_files
 
 
 def create_parser():
@@ -41,5 +50,6 @@ def create_parser():
 if __name__ == '__main__':
     parser = create_parser()
     namespace = parser.parse_args()
-    for file_path in remove_duplicates(namespace.directory):
-        print ("find duplicated file:", file_path)
+    for file_name, file_paths \
+            in remove_duplicates(namespace.directory).items():
+        print("find duplicated of {}:".format(file_name), *file_paths)

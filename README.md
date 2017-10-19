@@ -1,6 +1,6 @@
 # Anti-Duplicator
 
-This script remove same files in input directory and subdirectories
+This script find same files in input directory and subdirectories
 
 # Quickstart
 
@@ -11,10 +11,10 @@ Example of script launch on Linux, Python 3.5:
 ```#!bash
 
 duplicates.py ./
-remove  ./1\2\3\2.txt
-remove  ./1\2\3.txt
-remove  ./1\2\4.txt
-
+find duplicated file: ./1\2\4.txt
+find duplicated file: ./1\2\3.txt
+find duplicated file: ./1\2\3\3.txt
+find duplicated file: ./1\2\3\4.txt
 
 ```
 

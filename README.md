@@ -8,12 +8,18 @@ You can download and run it directly through console
 
 Example of script launch on Linux, Python 3.5:
 
-```#!bash
+```bash
 
 duplicates.py ./
-find duplicated of 2.txt: ./1\2\2.txt ./1\2.txt
-find duplicated of 3.txt: ./1\2\3\3.txt ./1\2\3.txt ./1\3.txt
-find duplicated of 4.txt: ./1\2\3\4.txt ./1\2\4.txt ./1\4.txt
+Find duplicated of 2.txt
+Size is 1
+List same files: ./1\2\2.txt ./1\2.txt
+Find duplicated of 3.txt
+Size is 1
+List same files: ./1\2\3\3.txt ./1\3.txt ./1\2\3.txt
+Find duplicated of 4.txt
+Size is 1
+List same files: ./1\2\3\4.txt ./1\4.txt ./1\2\4.txt
 
 ```
 

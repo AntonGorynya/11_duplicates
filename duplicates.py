@@ -1,6 +1,7 @@
 import os
-from os.path import join, getsize
+from os.path import getsize
 import argparse
+from collections import defaultdict
 
 
 def extract_list_of_files(directory, list_of_file=None):
@@ -19,25 +20,13 @@ def extract_list_of_files(directory, list_of_file=None):
 
 def remove_duplicates(directory):
     list_of_file = extract_list_of_files(directory)
-    dict_same_files = {file['name']: [] for file in list_of_file}
+    dict_same_files = defaultdict(set)
     removeble_files = {}
-    for position, file in enumerate(list_of_file):
-        file_name = file['name']
-        size = file['size']
-        list_same_file = []
-        for position2, file2 in enumerate(list_of_file):
-            file_name2 = file2['name']
-            size2 = file2['size']
-            if (file_name == file_name2) and (size == size2) \
-                    and (position2 > position):
-                list_same_file.append(file['path'])
-                list_same_file.append(file2['path'])
-        if list_same_file != []:
-            dict_same_files[file['name']] += list_same_file
-            dict_same_files[file['name']] = \
-                list(set(dict_same_files[file['name']]))
-            removeble_files.update(
-                {file['name']: dict_same_files[file['name']]})
+    for file in list_of_file:
+        dict_same_files[(file['name'], file['size'])].add(file['path'])
+    for key, value in dict_same_files.items():
+        if len(value) > 1:
+            removeble_files.update({key: value})
     return removeble_files
 
 
@@ -49,5 +38,6 @@ def create_parser():
 if __name__ == '__main__':
     parser = create_parser()
     args = parser.parse_args()
-    for file_name, file_paths in remove_duplicates(args.directory).items():
-        print("find duplicated of {}:".format(file_name), *file_paths)
+    for (file, size), file_paths in remove_duplicates(args.directory).items():
+        print("Find duplicated of {}\nSize is {}\nList same files:"
+              .format(file, size), *file_paths)

@@ -9,16 +9,15 @@ def extract_list_of_files(directory, list_of_file=None):
         list_of_file = []
     for dir_entry in os.scandir(directory):
         if dir_entry.is_dir():
-            extract_list_of_files(dir_entry, list_of_file)
+            extract_list_of_files(dir_entry.path, list_of_file)
         else:
             list_of_file.append({'name': dir_entry.name,
                                 'size': getsize(dir_entry.path),
                                  'path': dir_entry.path})
-    os.scandir(directory).close()
     return list_of_file
 
 
-def remove_duplicates(directory):
+def find_duplicates(directory):
     list_of_file = extract_list_of_files(directory)
     dict_same_files = defaultdict(set)
     removeble_files = {}
@@ -38,6 +37,6 @@ def create_parser():
 if __name__ == '__main__':
     parser = create_parser()
     args = parser.parse_args()
-    for (file, size), file_paths in remove_duplicates(args.directory).items():
+    for (file, size), file_paths in find_duplicates(args.directory).items():
         print("Find duplicated of {}\nSize is {}\nList same files:"
               .format(file, size), *file_paths)
